@@ -1,14 +1,13 @@
 from flask import request
 from flask_restx import Resource, Namespace
 
-from container import director_service
 from dao.schemas.director import directors_schema, director_schema
+from utils.container import director_service
 
 directors_ns = Namespace('directors')
 
 @directors_ns.route("/")
 class DirectorsView(Resource):
-        # @auth_required
         def get(self):
             """
             получает всех режиссеров
@@ -28,7 +27,6 @@ class DirectorsView(Resource):
 
 @directors_ns.route("/<int:did>")
 class DirectorsView(Resource):
-    # @auth_required
     def get(self, did: int):
         """
         получает одного режиссера по его id

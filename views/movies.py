@@ -1,14 +1,13 @@
 from flask import request
 from flask_restx import Resource, Namespace
 
-from container import movie_service
+from utils.container import movie_service
 from dao.schemas.movie import movies_schema, movie_schema
 
 movies_ns = Namespace('movies')
 
 @movies_ns.route("/")
 class MoviesView(Resource):
-    # @auth_required
     def get(self):
         """
         получает все фильмы
@@ -31,8 +30,7 @@ class MoviesView(Resource):
             return str(e), 404
 
 @movies_ns.route('/<int:mid>')
-class MovieView(Resource):
-    # @auth_required
+class MoviesView(Resource):
     def get(self, mid: int):
         """
         получает один фильм по его id

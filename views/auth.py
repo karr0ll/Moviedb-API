@@ -10,8 +10,8 @@ class AuthView(Resource):
     def post(self):
         data = request.json
 
-        email = data.get("email", None)
-        password = data.get("password", None)
+        email = data.get("email")
+        password = data.get("password")
         name = data.get("name", None)
         surname = data.get("surname", None)
 
@@ -20,9 +20,8 @@ class AuthView(Resource):
         try:
             user = auth_service.create(data)
             return "", 201, {"location": f'/users/{user.id}'}
-        except:
-            Exception
-            return "Такой пользователь уже существует", 500
+        except Exception as e:
+            return str(e), 500
 
 
 @auth_ns.route("/login")

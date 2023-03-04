@@ -1,14 +1,13 @@
 from flask import request
 from flask_restx import Resource, Namespace
 
-from container import genre_service
 from dao.schemas.genre import genres_schema, genre_schema
+from utils.container import genre_service
 
 genres_ns = Namespace('genres')
 
 @genres_ns.route("/")
 class GenresView(Resource):
-    # @auth_required
     def get(self):
         """
         получает все жанры
@@ -27,7 +26,6 @@ class GenresView(Resource):
 
 @genres_ns.route("/<int:gid>")
 class GenresView(Resource):
-    # @auth_required
     def get(self, gid: int):
         """
         получает один жанр по его id
