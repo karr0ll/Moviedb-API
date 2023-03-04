@@ -48,37 +48,3 @@ class MovieDAO:
         """
         movie = self.session.query(Movie).filter(Movie.year == year)
         return movie
-
-    def create(self, id_, title, description, trailer, year, rating, genre_id, director_id):
-        """
-        создает новый фильм
-        """
-        movie = Movie(id=id_,
-                      title=title,
-                      description=description,
-                      trailer=trailer,
-                      year=year,
-                      rating=rating,
-                      genre_id=genre_id,
-                      director_id=director_id)
-        self.session.add(movie)
-        self.session.commit()
-
-        return movie
-
-    def update(self, movie):
-        """
-        обвновляет данные о фильме по его id
-        """
-        self.session.add(movie)
-        self.session.commit()
-
-        return movie
-
-    def delete(self, mid):
-        """
-        удаляет фильм по его id
-        """
-        movie = self.get_one(mid)
-        self.session.delete(movie)
-        self.session.commit()
