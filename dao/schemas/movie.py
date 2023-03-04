@@ -1,5 +1,9 @@
 from marshmallow import Schema, fields
 
+from dao.schemas.director import DirectorSchema
+from dao.schemas.genre import GenreSchema
+
+
 class MovieSchema(Schema):
     id = fields.Int()
     title = fields.Str()
@@ -7,8 +11,8 @@ class MovieSchema(Schema):
     trailer = fields.Str()
     year = fields.Int()
     rating = fields.Float()
-    genre_id = fields.Int()
-    director_id = fields.Int()
+    genre = fields.Pluck(GenreSchema, "name")
+    director = fields.Pluck(DirectorSchema, "name")
 
 
 movie_schema = MovieSchema()
