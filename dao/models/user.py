@@ -1,5 +1,3 @@
-from sqlalchemy.orm import deferred
-
 from configs.config_db import db
 
 
