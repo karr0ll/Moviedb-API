@@ -5,6 +5,7 @@ from utils.container import auth_service
 
 auth_ns = Namespace("auth")
 
+
 @auth_ns.route("/register")
 class AuthView(Resource):
     def post(self):
@@ -41,12 +42,9 @@ class AuthView(Resource):
     def put(self):
         data = request.json
 
+        access_token = data.get("access_token", None)
         refresh_token = data.get("refresh_token", None)
-        tokens = auth_service.approve_tokens(refresh_token)
-        return tokens, 400
-
-
-
-
-
-
+        if None in [access_token, refresh_token]:
+            return "", 400
+        tokens = auth_service.approve_tokens(access_token, refresh_token)
+        return tokens, 200
