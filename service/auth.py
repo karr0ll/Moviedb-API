@@ -62,14 +62,21 @@ class AuthService:
             "access_token": access_token,
             "refresh_token": refresh_token,
         }
-    def approve_tokens(self, refresh_token):
-        data = jwt.decode(jwt=refresh_token, key=JWT_SECRET, algorithms=JWT_ALGORITHM)
-        email = data.get("email")
-        password = data.get("password")
 
-        user_data = self.dao.get_user_data_by_email(email)
+    def approve_tokens(self, access_token, refresh_token):
+        try:
+            access_token_data = jwt.decode(jwt=access_token, key=JWT_SECRET, algorithms=JWT_ALGORITHM)
+            refresh_token_data = jwt.decode(jwt=refresh_token, key=JWT_SECRET, algorithms=JWT_ALGORITHM)
 
-        if user_data is None:
-            raise abort(400)
+            email = access_token_data.get("email")
+            password = refresh_token_data.get("password")
 
-        return self.generate_tokens(email, password, is_refresh=True)
+            user_data = self.dao.get_user_data_by_email(email)
+
+            if user_data is None:
+                raise abort(400)
+
+            return self.generate_tokens(email, password, is_refresh=True)
+
+        except:
+            abort(403)
