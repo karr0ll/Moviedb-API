@@ -22,3 +22,4 @@ def auth_required(function):
         return function(*args, **kwargs)
 
     return wrapper
+
