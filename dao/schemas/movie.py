@@ -4,6 +4,11 @@ from dao.schemas.director import DirectorSchema
 from dao.schemas.genre import GenreSchema
 
 
+#
+# from dao.schemas.director import DirectorSchema
+# from dao.schemas.genre import GenreSchema
+
+
 class MovieSchema(Schema):
     id = fields.Int()
     title = fields.Str()
@@ -13,6 +18,8 @@ class MovieSchema(Schema):
     rating = fields.Float()
     genre = fields.Pluck(GenreSchema, "name")
     director = fields.Pluck(DirectorSchema, "name")
+    genre_id = fields.Int()
+    movie_id = fields.Int()
 
 
 movie_schema = MovieSchema()
