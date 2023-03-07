@@ -22,8 +22,15 @@ def create_app(config):
 
 def configure_app(application):
     db.init_app(application)
+    authorizations = {
+        'JWT': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    }
+    api = Api(application,authorizations=authorizations)
 
-    api = Api(application)
     api.add_namespace(directors_ns)
     api.add_namespace(genres_ns)
     api.add_namespace(movies_ns)
