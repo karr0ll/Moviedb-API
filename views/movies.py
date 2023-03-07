@@ -4,14 +4,17 @@ from flask_restx import Resource, Namespace
 from utils.container import movie_service
 from dao.schemas.movie import movies_schema, movie_schema
 
-movies_ns = Namespace('movies')
+movies_ns = Namespace('movies', "Эндпойнты работы с сущностями Movies")
+
 
 @movies_ns.route("/")
 class MoviesView(Resource):
+    @movies_ns.doc(responses={
+        200: 'Success',
+        404: 'Not found'
+    })
     def get(self):
-        """
-        получает все фильмы
-        """
+        """Поулчение списка со всеми фильмами"""
         page_number = request.args.get("page")
         status = request.args.get("status")
         try:
@@ -29,11 +32,18 @@ class MoviesView(Resource):
         except Exception as e:
             return str(e), 404
 
+
 @movies_ns.route('/<int:mid>')
 class MoviesView(Resource):
+    @movies_ns.doc(responses={
+        200: 'Success',
+        404: 'Not found'
+    }, params={
+        "mid": "id фильма"
+    })
     def get(self, mid: int):
         """
-        получает один фильм по его id
+        Получение списка с одним фильмом по его id
         """
         try:
             movie = movie_service.get_one(mid)

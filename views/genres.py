@@ -4,13 +4,18 @@ from flask_restx import Resource, Namespace
 from dao.schemas.genre import genres_schema, genre_schema
 from utils.container import genre_service
 
-genres_ns = Namespace('genres')
+genres_ns = Namespace('genres', "Эндпойнты работы с сущностями Genres")
+
 
 @genres_ns.route("/")
 class GenresView(Resource):
+    @genres_ns.doc(responses={
+        200: 'Success',
+        404: 'Not found'
+    })
     def get(self):
         """
-        получает все жанры
+        Получение списка со всеми жанрами
         """
         page_number = request.args.get("page")
         try:
@@ -19,16 +24,23 @@ class GenresView(Resource):
                 return genres_schema.dump(all_genres)
             else:
                 all_directors = genre_service.get_all()
-                return genres_schema.dump(all_directors)
+                return genres_schema.dump(all_directors), 200
 
         except Exception as e:
             return str(e), 404
 
+
 @genres_ns.route("/<int:gid>")
 class GenresView(Resource):
+    @genres_ns.doc(responses={
+        200: 'Success',
+        404: 'Not found'
+    }, params={
+        "gid": "id жанра"
+    })
     def get(self, gid: int):
         """
-        получает один жанр по его id
+        Получение списка с одним жанром по его id
         """
         try:
             genre = genre_service.get_one(gid)
