@@ -10,7 +10,9 @@ class FavoriteService:
 
     def add_one(self, mid, user_data):
         """
-        реализует логику получения данных об одном фильме по его id
+        реализует логику добавления id фильма и пользователя в таблицу favorites
+        :param mid: id фильма, получаемый из параметра route
+        :param user_data: данные, получаемые из headers["Authorization"]
         """
         token = user_data.split("Bearer ")[-1]
         data_from_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
