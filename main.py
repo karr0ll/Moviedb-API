@@ -1,8 +1,11 @@
+import logging
+
 from flask import Flask
 from flask_restx import Api
 
 from configs.config import Config
 from configs.config_db import db
+from utils.constants import AUTHORIZATIONS
 from utils.create_and_load_data import create_and_load_data
 from views.auth import auth_ns
 from views.directors import directors_ns
@@ -22,14 +25,7 @@ def create_app(config):
 
 def configure_app(application):
     db.init_app(application)
-    authorizations = {
-        'JWT': {
-            'type': 'apiKey',
-            'in': 'header',
-            'name': 'Authorization'
-        }
-    }
-    api = Api(application,authorizations=authorizations)
+    api = Api(application, authorizations=AUTHORIZATIONS)
 
     api.add_namespace(directors_ns)
     api.add_namespace(genres_ns)
