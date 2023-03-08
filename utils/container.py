@@ -24,5 +24,5 @@ genre_service = GenreService(genre_dao)
 movie_service = MovieService(movie_dao)
 auth_service = AuthService(auth_dao)
 user_service = UserService(user_dao)
-favorite_service = FavoriteService(favorite_dao)
+favorite_service = FavoriteService(favorite_dao, user_dao)
 
