@@ -4,7 +4,7 @@ from flask_restx import Resource, Namespace, fields
 from dao.schemas.user import user_schema
 from utils.container import user_service
 from utils.decorator import auth_required
-
+from utils.logger import logger
 
 users_ns = Namespace("user", "Эндпойнты работы с данными пользователей")
 
@@ -25,8 +25,10 @@ class UsersViews(Resource):
         try:
             data = request.headers["Authorization"]
             user_data = user_service.get_one(data)
+            logger.info("Запрос GET users/, 200")
             return user_schema.dump(user_data), 200
         except Exception as e:
+            logger.info(f" {e} Запрос GET users/ не прошел аутентификацию, 401")
             return str(e), 401
 
 
@@ -53,8 +55,11 @@ class UsersViews(Resource):
         user_data = request.json
         try:
             user_service.update_user(token_data, user_data)
+            logger.info("Запрос PATCH users/, 201")
             return "", 201
+
         except Exception as e:
+            logger.info(f" {e} Запрос PATCH users/ не прошел аутентификацию, 401")
             return str(e), 401
 
 
@@ -82,6 +87,10 @@ class UserViews(Resource):
         user_data = request.json
         try:
             user_service.update_password(data, user_data)
+            logger.info("Запрос PUT users/, 201")
             return "", 201
+
         except Exception as e:
+            logger.info(f" {e} Запрос PUT users/ не прошел аутентификацию, 401")
             return str(e), 401
+
