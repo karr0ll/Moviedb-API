@@ -1,19 +1,16 @@
-from sqlalchemy import desc
-
 from dao.models.favorite import Favorite
-from dao.models.movie import Movie
-from dao.models.user import User
 
 
 class FavoriteDAO:
     def __init__(self, session):
         self.session = session
 
-    def get_user_id_by_email(self, email):
-        uid = self.session.query(User.id).filter(User.email == email)
-        return uid
-
     def add_one(self, mid, uid):
+        """
+        Добавляет записи о пользователе в таблицу связей
+        :param mid: id фильма
+        :param uid: id пользователя
+        """
         new_favorite = Favorite(
             movie_id=mid,
             user_id=uid
@@ -23,6 +20,11 @@ class FavoriteDAO:
         return new_favorite
 
     def delete_one(self, mid, uid):
+        """
+        Удаляет запись о пользователе из таблицы связей
+        :param mid: id фильма
+        :param uid: id пользователя
+        """
         favorite_movie = self.session.query(Favorite).filter(
             Favorite.user_id == uid, Favorite.movie_id == mid
         ).one()
