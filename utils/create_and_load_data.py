@@ -2,7 +2,6 @@ from configs.config_db import db
 from dao.models.director import Director
 from dao.models.genre import Genre
 from dao.models.movie import Movie
-from dao.models.user import User
 from utils.json_reader import read_json
 
 
@@ -40,8 +39,4 @@ def create_and_load_data():
         )
         db.session.add(g)
 
-
-        db.session.commit()
-
-
-
+    db.session.commit()

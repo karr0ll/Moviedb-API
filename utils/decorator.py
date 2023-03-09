@@ -6,6 +6,7 @@ from utils.constants import JWT_SECRET, JWT_ALGORITHM
 
 
 def auth_required(function):
+    """ функция проверки аутентификации пользователя"""
     def wrapper(*args, **kwargs):
         if "Authorization" not in request.headers:
             abort(401)
@@ -22,3 +23,4 @@ def auth_required(function):
         return function(*args, **kwargs)
 
     return wrapper
+
