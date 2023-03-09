@@ -42,7 +42,8 @@ class AuthView(Resource):
         favorite_genre = data.get("favorite_genre", None)
 
         if None in [email, password]:
-            logger.info("Тело запроса POST auth/register не содержит email или пароль, 400")
+            logger.info("Тело запроса POST auth/register не содержит email или пароль,"
+                        " 400")
             return "", 400
         try:
             user = auth_service.create(data)
@@ -59,7 +60,6 @@ class AuthView(Resource):
         201: 'Created',
         400: 'Bad request',
     }, security='JWT')
-    @auth_required
     def post(self):
         """
         Получение access_token и refresh_token.
