@@ -24,7 +24,7 @@ class FavoriteService:
 
     def delete_one(self, mid, user_data):
         """
-        реализует логику получения данных об одном фильме по его id
+        реализует логику удаления данных об одном фильме по его id
         """
         token = user_data.split("Bearer ")[-1]
         data_from_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
